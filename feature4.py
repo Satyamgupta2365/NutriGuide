@@ -2,7 +2,7 @@ import google.generativeai as genai
 import streamlit as st
 import os
 
-api_key = "AIzaSyC4f-d-Igv6UWdHKoMgZcNfRTeQBFVgtUw"  # Replace with your actual API key
+api_key = "AIzaSyC4f-d-Igv6UWdHKoMgZcNfRTeQBFVgtUw"  
 genai.configure(api_key=api_key)
 
 if not os.path.exists("temp"):
@@ -47,7 +47,7 @@ if image_file:
             st.success("Nutrient analysis completed!")
             st.write(result.text)
 
-            # Now assess the overall balance using the nutrient analysis result
+            
             balance_result = model.generate_content(
                 [
                     result.text,
@@ -63,7 +63,7 @@ if image_file:
                 ]
             )
 
-            # Displaying the balance result in a small box
+            
             st.markdown("<div style='background-color: #f0f0f0; padding: 10px; border-radius: 5px;'>"
                         "<strong>Meal Balance Assessment:</strong><br>"
                         f"{balance_result.text}"

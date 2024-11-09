@@ -1,16 +1,16 @@
- # Import necessary libraries
+ 
 import streamlit as st
 from groq import Groq
 
-# Directly assign the API key
+
 API_KEY = "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"  
 
-# Initialize the Groq client with the API key
+
 client = Groq(api_key=API_KEY)
 
-# Function to get personalized meal plan
+
 def get_meal_plan(age, sex, weight_goal, eating_habits, dietary_restrictions,intermittent_fast_timing ,traditional_diet,Duration):
-    # Prepare the request data
+    
     messages = [
         {
             "role": "user",
@@ -35,7 +35,7 @@ def get_meal_plan(age, sex, weight_goal, eating_habits, dietary_restrictions,int
         }
     ]
 
-    # Make the API call to get the meal plan
+    
     try:
         completion = client.chat.completions.create(
             model="llama-3.2-90b-text-preview",
@@ -43,17 +43,17 @@ def get_meal_plan(age, sex, weight_goal, eating_habits, dietary_restrictions,int
             temperature=1,
             max_tokens=1024,
             top_p=1,
-            stream=False,  # Change to False to get the full response
+            stream=False,  
             stop=None,
         )
 
-        # Extract and return the content from the response
+        
         meal_plan = completion.choices[0].message.content
         return meal_plan
     except Exception as e:
         return {"error": str(e)}
 
-# Streamlit interface
+
 st.title("NutriGuide.AI - Personalized Meal Plan")
 age = st.number_input("Enter your age:", min_value=0, max_value=120)
 sex = st.selectbox("Select your sex:", ["Male", "Female", "Other"])
@@ -68,4 +68,4 @@ Duration = st.selectbox("The time period for which u want the meal plan:",["one 
 
 if st.button("Get Meal Plan"):
     meal_plan = get_meal_plan(age, sex, weight_goal, eating_habits, dietary_restrictions.split(","),intermittent_fast_timing, traditional_diet.split(","),Duration.split(","))
-    st.write(meal_plan)  # Display the meal plan response
+    st.write(meal_plan) 

@@ -1,13 +1,12 @@
 import streamlit as st
 from groq import Groq
 
-# Directly assign the API key here
+
 api_key = "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"
 
-# Initialize Groq client with API key
+
 client = Groq(api_key=api_key)
 
-# Helper function to call Llama API
 def get_condition_info(condition, time_period=None):
     messages = [
         {
@@ -35,17 +34,17 @@ def get_condition_info(condition, time_period=None):
         stream=True,
     )
 
-    # Collect response data
+    
     response_text = ""
     for chunk in completion:
         response_text += chunk.choices[0].delta.content or ""
     return response_text
 
-# Streamlit App Interface
+
 st.title("NutriGuide.AI - Chronic Condition Support")
 st.header("Personalized Dietary Support for Chronic Conditions")
 
-# Step 1: Select Chronic Condition
+
 st.subheader("Select Your Chronic Condition:")
 conditions = [
     "Diabetes", "Hypertension", "Cardiovascular Disease", "Obesity",
@@ -54,13 +53,13 @@ conditions = [
 ]
 condition = st.selectbox("Choose a condition:", conditions)
 
-# Step 2: Customized Meal Planning Duration
+
 time_period = None
 if condition != "Other":
     st.subheader("Meal Planning Duration")
     time_period = st.radio("Choose a meal planning duration:", ["Day", "Week", "Month"])
 
-# Step 3: Handle User Input and Generate Response
+
 if st.button("Get Nutrition Plan and Advice"):
     if condition == "Other":
         condition = st.text_input("Please specify your condition:")
